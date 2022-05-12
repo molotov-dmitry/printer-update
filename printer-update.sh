@@ -34,7 +34,7 @@ PRINTER_URI['Kyocera_Dev']='socket://10.0.0.165'
 PRINTER_MODEL['Kyocera_Dev']='Generic PCL 6/PCL XL Printer Foomatic/pxlcolor (recommended)'
 PRINTER_DRIVER['Kyocera_Dev']='foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Generic-PCL_6_PCL_XL_Printer-pxlcolor.ppd'
 
-printers=( $(LC_ALL=C lpstat -v | awk '{ print $3 }' | tr ':' ' ') )
+printers=( $(LC_ALL=C lpstat -v | cut -d ' ' -f 3 | tr ':' ' ') )
 
 for printer in "${printers[@]}"
 do
