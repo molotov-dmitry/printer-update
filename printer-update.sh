@@ -20,6 +20,8 @@ contains()
 readonly -a PRINTERS_OLD=('HP_Laserjet_1320')
 readonly -a PRINTERS=('Kyocera_Dev')
 
+readonly PRINTER_DEFAULT='Kyocera_Dev'
+
 declare -A PRINTER_DESCRIPTIONS
 declare -A PRINTER_LOCATIONS
 declare -A PRINTER_URI
@@ -104,4 +106,14 @@ do
         echo "Added '${printer}'"
     fi
 done
+
+#### Configure default printer =================================================
+
+printer_default="$(LC_ALL=C lpstat -d | cut -s -d ':' -f 2- | sed 's/^[ ]*//;s/[ ]*$//')"
+
+if [[ "${printer_default}" != "${PRINTER_DEFAULT}" ]]
+then
+    /usr/sbin/lpadmin -d "${PRINTER_DEFAULT}"
+    echo "Set '${printer}' as default"
+fi
 
